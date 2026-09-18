@@ -4,122 +4,306 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#198754">
-<meta name="description" content="AGRI-SIAGA - Sistem Informasi Kondisi Musim dan Rekomendasi Pertanian">
+<meta name="theme-color" content="#11643d">
+<meta name="description" content="AGRI-SIAGA - Sistem Informasi Pertanian Pintar">
 <title>AGRI-SIAGA | Smart Agriculture</title>
 
 <style>
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:
-        linear-gradient(rgba(230,248,237,.92),rgba(245,255,248,.96)),
-        radial-gradient(circle at 20% 20%,#b8e6c8 0,transparent 25%),
-        radial-gradient(circle at 80% 70%,#a7dcb8 0,transparent 25%);
+    font-family:Arial,Helvetica,sans-serif;
     color:#173b29;
     min-height:100vh;
+    background:
+        linear-gradient(
+            rgba(235,250,240,.94),
+            rgba(248,255,250,.97)
+        ),
+        radial-gradient(
+            circle at 15% 20%,
+            #b8e6c8,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            #b4e3c4,
+            transparent 28%
+        );
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
+
 nav{
-    width:100%;
-    background:#11643d;
-    color:white;
-    padding:16px 7%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
     position:sticky;
     top:0;
-    z-index:1000;
-    box-shadow:0 4px 15px rgba(0,0,0,.15);
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 7%;
+    background:#11643d;
+    color:white;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
 .logo{
     font-size:22px;
-    font-weight:bold;
+    font-weight:800;
 }
 
 .logo span{
-    color:#baf5c9;
+    color:#bdf4cc;
 }
 
 nav ul{
-    list-style:none;
     display:flex;
-    gap:20px;
+    list-style:none;
+    gap:25px;
 }
 
 nav a{
     color:white;
     text-decoration:none;
-    font-size:14px;
     font-weight:bold;
+    font-size:14px;
 }
 
 nav a:hover{
-    color:#baf5c9;
+    color:#bdf4cc;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
+
 .hero{
+    width:90%;
     max-width:1150px;
-    margin:35px auto 20px;
-    padding:45px 30px;
+    margin:35px auto 25px;
+    padding:55px 30px;
     border-radius:30px;
-    background:
-        linear-gradient(135deg,rgba(17,100,61,.95),rgba(25,135,84,.88));
-    color:white;
-    box-shadow:0 15px 40px rgba(17,100,61,.2);
     text-align:center;
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #11643d,
+            #198754
+        );
+    box-shadow:0 15px 40px rgba(17,100,61,.25);
 }
 
 .hero h1{
-    font-size:42px;
-    margin-bottom:12px;
+    font-size:44px;
+    margin-bottom:14px;
 }
 
 .hero p{
-    max-width:720px;
+    max-width:760px;
     margin:auto;
-    line-height:1.7;
-    opacity:.95;
+    line-height:1.8;
+    font-size:16px;
 }
 
-/* CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
+
 .container{
     width:90%;
     max-width:1150px;
-    margin:30px auto 60px;
+    margin:auto;
 }
 
-/* CARD */
 .card{
-    background:rgba(255,255,255,.94);
-    border-radius:24px;
+    background:rgba(255,255,255,.96);
+    border:1px solid #d9eee0;
+    border-radius:25px;
     padding:28px;
     margin-bottom:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    border:1px solid #d7eee0;
+    box-shadow:0 10px 30px rgba(0,0,0,.07);
 }
 
 .card h2{
-    margin-bottom:10px;
     color:#11643d;
+    margin-bottom:10px;
 }
 
 .subtitle{
-    color:#678171;
-    margin-bottom:20px;
+    color:#668071;
+    line-height:1.7;
+    margin-bottom:22px;
+}
+
+/* =========================
+   LOCATION CARD
+========================= */
+
+.location-box{
+    padding:22px;
+    background:#f0faf3;
+    border-radius:20px;
+    border:1px solid #d5ebdc;
+    margin-top:15px;
+}
+
+.location-status{
+    font-weight:bold;
+    color:#11643d;
+    margin-bottom:10px;
     line-height:1.6;
 }
 
-/* FORM */
+.location-detail{
+    color:#61756a;
+    line-height:1.7;
+    margin-bottom:18px;
+}
+
+.gps-loading{
+    display:inline-block;
+    width:17px;
+    height:17px;
+    border:3px solid #cde8d7;
+    border-top-color:#198754;
+    border-radius:50%;
+    animation:putar .8s linear infinite;
+    vertical-align:middle;
+    margin-right:7px;
+}
+
+@keyframes putar{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+    border:0;
+    padding:14px 22px;
+    border-radius:14px;
+    background:#198754;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+    transition:.25s;
+}
+
+button:hover{
+    background:#11643d;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(17,100,61,.2);
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.center{
+    text-align:center;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+#hasilMusim{
+    display:none;
+}
+
+.status{
+    padding:28px;
+    border-radius:22px;
+    text-align:center;
+    background:#e9f8ef;
+    margin:20px 0;
+}
+
+.status p{
+    color:#678171;
+    margin-bottom:8px;
+}
+
+.status h3{
+    color:#11643d;
+    font-size:29px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.stat{
+    padding:25px 15px;
+    text-align:center;
+    background:#f7fff9;
+    border:1px solid #dcefe2;
+    border-radius:20px;
+}
+
+.stat-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.stat h4{
+    color:#688074;
+    margin-bottom:8px;
+}
+
+.stat strong{
+    color:#11643d;
+    font-size:25px;
+}
+
+/* =========================
+   RECOMMENDATION
+========================= */
+
+.rekomendasi{
+    margin-top:22px;
+    padding:23px;
+    border-left:6px solid #198754;
+    border-radius:17px;
+    background:#f0faf3;
+    line-height:1.7;
+}
+
+.rekomendasi strong{
+    color:#11643d;
+    font-size:19px;
+}
+
+.rekomendasi ul{
+    margin:10px 0 0 20px;
+}
+
+/* =========================
+   FORM
+========================= */
+
 .form-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -141,10 +325,10 @@ input{
     width:100%;
     padding:14px;
     border-radius:14px;
-    border:2px solid #d6eade;
-    background:#f9fffb;
-    font-size:15px;
+    border:2px solid #d8ebdf;
+    background:#fbfffc;
     outline:none;
+    font-size:15px;
 }
 
 select:focus,
@@ -152,113 +336,15 @@ input:focus{
     border-color:#198754;
 }
 
-/* BUTTON */
-button{
-    border:none;
-    border-radius:14px;
-    padding:14px 22px;
-    background:#198754;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:15px;
-    transition:.25s;
-}
-
-button:hover{
-    transform:translateY(-2px);
-    background:#11643d;
-    box-shadow:0 8px 20px rgba(17,100,61,.2);
-}
-
 .btn-wrap{
     margin-top:20px;
     text-align:center;
 }
 
-/* RESULT */
-#hasilMusim{
-    display:none;
-}
+/* =========================
+   INFO
+========================= */
 
-.status{
-    padding:25px;
-    border-radius:20px;
-    background:#e9f8ef;
-    text-align:center;
-    margin:20px 0;
-}
-
-.status h3{
-    font-size:28px;
-    color:#11643d;
-}
-
-/* STATS */
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.stat{
-    padding:25px;
-    background:#f5fff8;
-    border:1px solid #d9eee1;
-    border-radius:20px;
-    text-align:center;
-}
-
-.stat-icon{
-    font-size:34px;
-    margin-bottom:10px;
-}
-
-.stat h4{
-    color:#678171;
-    margin-bottom:7px;
-}
-
-.stat strong{
-    font-size:25px;
-    color:#11643d;
-}
-
-/* REKOMENDASI */
-.rekomendasi{
-    margin-top:20px;
-    padding:22px;
-    background:#f0faf3;
-    border-left:6px solid #198754;
-    border-radius:16px;
-    line-height:1.7;
-}
-
-.rekomendasi strong{
-    color:#11643d;
-    font-size:19px;
-}
-
-.rekomendasi ul{
-    margin:12px 0 0 20px;
-}
-
-/* MANUAL */
-.manual-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.manual-result{
-    margin-top:20px;
-    padding:20px;
-    border-radius:18px;
-    background:#eefaf2;
-    display:none;
-}
-
-/* INFO */
 .info-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -267,13 +353,13 @@ button:hover{
 
 .info-box{
     padding:22px;
-    border-radius:20px;
     background:#f8fffa;
     border:1px solid #dcefe2;
+    border-radius:20px;
 }
 
-.info-box .icon{
-    font-size:30px;
+.info-icon{
+    font-size:32px;
     margin-bottom:10px;
 }
 
@@ -283,34 +369,69 @@ button:hover{
 }
 
 .info-box p{
-    color:#64766a;
+    color:#66786d;
     line-height:1.6;
     font-size:14px;
 }
 
-/* FOOTER */
+/* =========================
+   MANUAL RESULT
+========================= */
+
+#hasilManual{
+    display:none;
+    margin-top:20px;
+    padding:22px;
+    border-radius:18px;
+    background:#effaf3;
+    border-left:6px solid #198754;
+}
+
+/* =========================
+   MAP
+========================= */
+
+.map-link{
+    display:inline-block;
+    margin-top:10px;
+    color:#198754;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.map-link:hover{
+    text-decoration:underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
 footer{
+    margin-top:40px;
+    padding:28px;
+    text-align:center;
     background:#11643d;
     color:white;
-    text-align:center;
-    padding:25px;
-    line-height:1.7;
+    line-height:1.8;
 }
 
-footer span{
-    color:#baf5c9;
-    font-weight:bold;
+footer strong{
+    color:#bdf4cc;
 }
 
-/* ANIMATION */
-.hasil-muncul{
-    animation:muncul .5s ease;
+/* =========================
+   ANIMATION
+========================= */
+
+.muncul{
+    animation:muncul .6s ease;
 }
 
 @keyframes muncul{
     from{
         opacity:0;
-        transform:translateY(15px);
+        transform:translateY(20px);
     }
     to{
         opacity:1;
@@ -318,7 +439,10 @@ footer span{
     }
 }
 
-/* RESPONSIVE */
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:800px){
 
     nav{
@@ -330,23 +454,30 @@ footer span{
     }
 
     .hero{
-        margin:20px 5% 20px;
-        padding:35px 20px;
+        margin-top:20px;
+        padding:40px 20px;
     }
 
     .hero h1{
-        font-size:32px;
+        font-size:34px;
     }
 
-    .form-grid,
+    .hero p{
+        font-size:14px;
+    }
+
     .stats,
-    .manual-grid,
+    .form-grid,
     .info-grid{
         grid-template-columns:1fr;
     }
 
-    .container{
-        width:90%;
+    .card{
+        padding:21px;
+    }
+
+    button{
+        width:100%;
     }
 }
 </style>
@@ -354,249 +485,350 @@ footer span{
 
 <body>
 
-<!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <nav>
-    <div class="logo">🌱 AGRI-<span>SIAGA</span></div>
+
+    <div class="logo">
+        🌱 AGRI-<span>SIAGA</span>
+    </div>
 
     <ul>
-        <li><a href="#beranda">Beranda</a></li>
-        <li><a href="#cek">Cek Musim</a></li>
-        <li><a href="#manual">Analisis</a></li>
-        <li><a href="#tentang">Tentang</a></li>
+        <li>
+            <a href="#beranda">Beranda</a>
+        </li>
+
+        <li>
+            <a href="#lokasi">Lokasi</a>
+        </li>
+
+        <li>
+            <a href="#analisis">Analisis</a>
+        </li>
+
+        <li>
+            <a href="#tentang">Tentang</a>
+        </li>
     </ul>
+
 </nav>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero" id="beranda">
+
     <h1>🌾 AGRI-SIAGA</h1>
 
     <p>
-        Sistem Informasi Pertanian Pintar untuk membantu petani
-        mengetahui kondisi musim, memantau cuaca, dan mendapatkan
-        rekomendasi pengelolaan pertanian berdasarkan kondisi wilayah.
+        Sistem Informasi Pertanian Pintar yang membantu pengguna
+        mengetahui kondisi wilayah berdasarkan lokasi,
+        memahami kondisi musim, serta mendapatkan rekomendasi
+        pengelolaan pertanian.
     </p>
+
 </section>
 
 
 <main class="container">
 
-<!-- PILIH WILAYAH -->
-<section class="card" id="cek">
 
-    <h2>📍 Cek Kondisi Musim Wilayah</h2>
+<!-- =========================
+     LOKASI OTOMATIS
+========================= -->
+
+<section class="card" id="lokasi">
+
+    <h2>📍 Lokasi Anda</h2>
 
     <p class="subtitle">
-        Pilih wilayah untuk melihat contoh kondisi curah hujan,
-        suhu, kelembapan, dan rekomendasi pertanian.
+        AGRI-SIAGA membutuhkan akses lokasi untuk mengetahui
+        posisi pengguna secara otomatis. Pastikan GPS/Lokasi
+        pada HP aktif dan izinkan browser mengakses lokasi.
     </p>
 
-    <div class="form-grid">
+    <div class="location-box">
 
-        <div class="form-group">
-            <label for="wilayah">Kabupaten / Kota</label>
+        <div
+            class="location-status"
+            id="statusLokasi">
 
-            <select id="wilayah">
-                <option value="">-- Pilih Wilayah --</option>
-
-                <option value="Kabupaten Jombang">
-                    Kabupaten Jombang
-                </option>
-
-                <option value="Kabupaten Kediri">
-                    Kabupaten Kediri
-                </option>
-
-                <option value="Kabupaten Malang">
-                    Kabupaten Malang
-                </option>
-
-                <option value="Kabupaten Mojokerto">
-                    Kabupaten Mojokerto
-                </option>
-
-                <option value="Kabupaten Nganjuk">
-                    Kabupaten Nganjuk
-                </option>
-
-                <option value="Kabupaten Madiun">
-                    Kabupaten Madiun
-                </option>
-
-                <option value="Kabupaten Ponorogo">
-                    Kabupaten Ponorogo
-                </option>
-
-                <option value="Kabupaten Banyuwangi">
-                    Kabupaten Banyuwangi
-                </option>
-
-                <option value="Kabupaten Blitar">
-                    Kabupaten Blitar
-                </option>
-
-                <option value="Kabupaten Tulungagung">
-                    Kabupaten Tulungagung
-                </option>
-            </select>
+            <span class="gps-loading"></span>
+            Meminta izin lokasi...
         </div>
 
-    </div>
+        <div
+            class="location-detail"
+            id="lokasiPengguna">
 
-    <div class="btn-wrap">
-        <button id="cekMusim">
-            🌦️ Cek Kondisi Musim
+            AGRI-SIAGA sedang mencari lokasi Anda.
+        </div>
+
+        <button id="gunakanLokasi">
+
+            📍 Gunakan Lokasi Saya
+
         </button>
+
     </div>
 
 </section>
 
 
-<!-- HASIL -->
-<section class="card" id="hasilMusim">
+<!-- =========================
+     HASIL MUSIM
+========================= -->
 
-    <h2>📊 Hasil Analisis Wilayah</h2>
+<section
+    class="card"
+    id="hasilMusim">
+
+    <h2>
+        📊 Kondisi Wilayah Anda
+    </h2>
 
     <div class="status">
-        <p>Kondisi wilayah saat ini</p>
+
+        <p>
+            Kondisi musim
+        </p>
+
         <h3 id="statusMusim">
             🌤️ Belum dianalisis
         </h3>
+
     </div>
+
 
     <div class="stats">
 
         <div class="stat">
-            <div class="stat-icon">🌧️</div>
-            <h4>Curah Hujan</h4>
-            <strong id="curahHujan">-</strong>
+
+            <div class="stat-icon">
+                🌧️
+            </div>
+
+            <h4>
+                Curah Hujan
+            </h4>
+
+            <strong id="curahHujan">
+                -
+            </strong>
+
         </div>
 
-        <div class="stat">
-            <div class="stat-icon">🌡️</div>
-            <h4>Suhu</h4>
-            <strong id="suhu">-</strong>
-        </div>
 
         <div class="stat">
-            <div class="stat-icon">💧</div>
-            <h4>Kelembapan</h4>
-            <strong id="kelembapan">-</strong>
+
+            <div class="stat-icon">
+                🌡️
+            </div>
+
+            <h4>
+                Suhu
+            </h4>
+
+            <strong id="suhu">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                💧
+            </div>
+
+            <h4>
+                Kelembapan
+            </h4>
+
+            <strong id="kelembapan">
+                -
+            </strong>
+
         </div>
 
     </div>
 
-    <div class="rekomendasi" id="rekomendasi">
-        Pilih wilayah untuk melihat rekomendasi.
+
+    <div
+        class="rekomendasi"
+        id="rekomendasi">
+
+        Menunggu hasil analisis...
+
     </div>
 
 </section>
 
 
-<!-- ANALISIS MANUAL -->
-<section class="card" id="manual">
+<!-- =========================
+     ANALISIS MANUAL
+========================= -->
 
-    <h2>🧠 Analisis Data Pertanian</h2>
+<section
+    class="card"
+    id="analisis">
+
+    <h2>
+        🧠 Analisis Data Pertanian
+    </h2>
 
     <p class="subtitle">
-        Masukkan data curah hujan, suhu, dan kelembapan secara manual.
-        AGRI-SIAGA akan mengelompokkan kondisi menjadi
-        cenderung basah, cenderung kering, atau peralihan.
+        Masukkan data lingkungan secara manual untuk
+        mendapatkan klasifikasi kondisi wilayah.
     </p>
 
-    <div class="manual-grid">
+
+    <div class="form-grid">
 
         <div class="form-group">
-            <label>🌧️ Curah Hujan (mm)</label>
+
+            <label>
+                🌧️ Curah Hujan (mm)
+            </label>
+
             <input
                 type="number"
                 id="inputCurahHujan"
-                placeholder="Contoh: 150"
-                min="0">
+                min="0"
+                placeholder="Contoh: 150">
+
         </div>
 
+
         <div class="form-group">
-            <label>🌡️ Suhu (°C)</label>
+
+            <label>
+                🌡️ Suhu (°C)
+            </label>
+
             <input
                 type="number"
                 id="inputSuhu"
-                placeholder="Contoh: 28"
-                min="-10"
-                max="60">
+                placeholder="Contoh: 28">
+
         </div>
 
+
         <div class="form-group">
-            <label>💧 Kelembapan (%)</label>
+
+            <label>
+                💧 Kelembapan (%)
+            </label>
+
             <input
                 type="number"
                 id="inputKelembapan"
-                placeholder="Contoh: 78"
                 min="0"
-                max="100">
+                max="100"
+                placeholder="Contoh: 78">
+
         </div>
 
     </div>
 
+
     <div class="btn-wrap">
+
         <button id="analisisData">
             🤖 Analisis Data
         </button>
+
     </div>
 
-    <div class="manual-result" id="hasilManual">
+
+    <div id="hasilManual">
+
         <h3 id="hasilManualJudul"></h3>
-        <p id="hasilManualText"></p>
+
+        <div id="hasilManualText"></div>
+
     </div>
 
 </section>
 
 
-<!-- TENTANG -->
-<section class="card" id="tentang">
+<!-- =========================
+     TENTANG
+========================= -->
 
-    <h2>🌱 Tentang AGRI-SIAGA</h2>
+<section
+    class="card"
+    id="tentang">
+
+    <h2>
+        🌱 Tentang AGRI-SIAGA
+    </h2>
 
     <p class="subtitle">
-        AGRI-SIAGA dirancang sebagai konsep sistem pertanian digital
-        yang membantu pengguna memahami kondisi lingkungan pertanian
-        sebelum melakukan kegiatan budidaya.
+        AGRI-SIAGA merupakan konsep sistem informasi pertanian
+        yang memanfaatkan teknologi digital untuk membantu
+        pengguna memahami kondisi lingkungan pertanian.
     </p>
+
 
     <div class="info-grid">
 
         <div class="info-box">
-            <div class="icon">🌦️</div>
 
-            <h3>Informasi Musim</h3>
+            <div class="info-icon">
+                📍
+            </div>
+
+            <h3>
+                Lokasi Otomatis
+            </h3>
 
             <p>
-                Menampilkan klasifikasi kondisi wilayah berdasarkan
-                data curah hujan dan kelembapan.
+                Menggunakan GPS perangkat untuk mendapatkan
+                koordinat lokasi pengguna setelah izin diberikan.
             </p>
+
         </div>
 
 
         <div class="info-box">
-            <div class="icon">📊</div>
 
-            <h3>Analisis Data</h3>
+            <div class="info-icon">
+                🌦️
+            </div>
+
+            <h3>
+                Kondisi Musim
+            </h3>
 
             <p>
-                Pengguna dapat memasukkan data lingkungan secara
-                manual untuk mendapatkan hasil analisis.
+                Menampilkan klasifikasi kondisi wilayah menjadi
+                cenderung basah, cenderung kering, atau peralihan.
             </p>
+
         </div>
 
 
         <div class="info-box">
-            <div class="icon">🌾</div>
 
-            <h3>Rekomendasi</h3>
+            <div class="info-icon">
+                🌾
+            </div>
+
+            <h3>
+                Rekomendasi Pertanian
+            </h3>
 
             <p>
-                Memberikan saran umum mengenai pengelolaan lahan
-                berdasarkan kondisi basah, kering, atau peralihan.
+                Memberikan rekomendasi umum berdasarkan kondisi
+                lingkungan yang ditampilkan sistem.
             </p>
+
         </div>
 
     </div>
@@ -606,100 +838,140 @@ footer span{
 </main>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
-    <div>🌱 <span>AGRI-SIAGA</span></div>
-    <div>Sistem Informasi Pertanian Pintar</div>
-    <div>© 2026 AGRI-SIAGA</div>
+
+    <strong>
+        🌱 AGRI-SIAGA
+    </strong>
+
+    <br>
+
+    Sistem Informasi Pertanian Pintar
+
+    <br>
+
+    © 2026 AGRI-SIAGA
+
 </footer>
 
 
 <script>
 
-/* =========================================
-   DATA WILAYAH
-   ========================================= */
+/* =====================================================
+   DATA WILAYAH CONTOH
+   ===================================================== */
 
 const wilayahData = {
 
-    "Kabupaten Jombang":{
+    "Jombang":{
+        latitude:-7.545,
+        longitude:112.233,
         musim:"Peralihan",
         curahHujan:145,
         suhu:28,
         kelembapan:78
     },
 
-    "Kabupaten Kediri":{
+    "Kediri":{
+        latitude:-7.816,
+        longitude:112.011,
         musim:"Cenderung Basah",
         curahHujan:180,
         suhu:27,
         kelembapan:82
     },
 
-    "Kabupaten Malang":{
+    "Malang":{
+        latitude:-7.981,
+        longitude:112.630,
         musim:"Cenderung Basah",
         curahHujan:210,
         suhu:25,
         kelembapan:85
     },
 
-    "Kabupaten Mojokerto":{
+    "Mojokerto":{
+        latitude:-7.470,
+        longitude:112.440,
         musim:"Peralihan",
         curahHujan:155,
         suhu:28,
         kelembapan:79
     },
 
-    "Kabupaten Nganjuk":{
+    "Nganjuk":{
+        latitude:-7.605,
+        longitude:111.904,
         musim:"Cenderung Kering",
         curahHujan:90,
         suhu:29,
         kelembapan:70
     },
 
-    "Kabupaten Madiun":{
+    "Madiun":{
+        latitude:-7.630,
+        longitude:111.523,
         musim:"Cenderung Kering",
         curahHujan:85,
         suhu:30,
         kelembapan:68
     },
 
-    "Kabupaten Ponorogo":{
+    "Ponorogo":{
+        latitude:-7.865,
+        longitude:111.469,
         musim:"Peralihan",
         curahHujan:135,
         suhu:28,
         kelembapan:75
     },
 
-    "Kabupaten Banyuwangi":{
+    "Banyuwangi":{
+        latitude:-8.219,
+        longitude:114.369,
         musim:"Cenderung Basah",
         curahHujan:225,
         suhu:26,
         kelembapan:86
     },
 
-    "Kabupaten Blitar":{
+    "Blitar":{
+        latitude:-8.098,
+        longitude:112.168,
         musim:"Peralihan",
         curahHujan:150,
         suhu:27,
         kelembapan:79
     },
 
-    "Kabupaten Tulungagung":{
+    "Tulungagung":{
+        latitude:-8.065,
+        longitude:111.902,
         musim:"Peralihan",
         curahHujan:140,
         suhu:28,
         kelembapan:77
     }
+
 };
 
 
-/* =========================================
-   AMBIL ELEMENT
-   ========================================= */
+/* =====================================================
+   ELEMENT HTML
+   ===================================================== */
 
-const wilayahSelect =
-    document.getElementById("wilayah");
+const statusLokasi =
+    document.getElementById("statusLokasi");
+
+const lokasiPengguna =
+    document.getElementById("lokasiPengguna");
+
+const gunakanLokasi =
+    document.getElementById("gunakanLokasi");
 
 const hasilMusim =
     document.getElementById("hasilMusim");
@@ -719,12 +991,6 @@ const kelembapan =
 const rekomendasi =
     document.getElementById("rekomendasi");
 
-const cekMusim =
-    document.getElementById("cekMusim");
-
-const analisisDataButton =
-    document.getElementById("analisisData");
-
 const hasilManual =
     document.getElementById("hasilManual");
 
@@ -735,60 +1001,385 @@ const hasilManualText =
     document.getElementById("hasilManualText");
 
 
-/* =========================================
-   IKON MUSIM
-   ========================================= */
+/* =====================================================
+   FUNGSI STATUS LOKASI
+   ===================================================== */
 
-function iconMusim(musim){
+function ubahStatusLokasi(teks){
 
-    if(musim === "Cenderung Basah"){
-        return "🌧️";
-    }
+    statusLokasi.innerHTML = teks;
 
-    if(musim === "Cenderung Kering"){
-        return "☀️";
-    }
-
-    return "🌤️";
 }
 
 
-/* =========================================
+/* =====================================================
+   FUNGSI MEMINTA LOKASI
+   ===================================================== */
+
+function mintaLokasi(){
+
+    if(!navigator.geolocation){
+
+        ubahStatusLokasi(
+            "❌ Browser tidak mendukung GPS."
+        );
+
+        lokasiPengguna.innerHTML =
+            "Silakan gunakan browser terbaru seperti Chrome, Edge, atau Safari.";
+
+        return;
+    }
+
+
+    ubahStatusLokasi(
+        '<span class="gps-loading"></span> Meminta akses lokasi...'
+    );
+
+    lokasiPengguna.innerHTML =
+        "Silakan pilih <b>Izinkan</b> ketika browser meminta akses lokasi.";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+            const akurasi =
+                position.coords.accuracy;
+
+
+            console.log(
+                "Latitude:",
+                latitude
+            );
+
+            console.log(
+                "Longitude:",
+                longitude
+            );
+
+            console.log(
+                "Akurasi:",
+                akurasi
+            );
+
+
+            ubahStatusLokasi(
+                "✅ Lokasi berhasil diaktifkan."
+            );
+
+
+            lokasiPengguna.innerHTML =
+                `
+                <b>📍 Lokasi GPS terdeteksi</b><br>
+                Latitude:
+                ${latitude.toFixed(5)}
+                <br>
+                Longitude:
+                ${longitude.toFixed(5)}
+                <br>
+                Akurasi sekitar:
+                ${Math.round(akurasi)} meter
+                <br>
+                <a
+                    class="map-link"
+                    href="https://www.google.com/maps?q=${latitude},${longitude}"
+                    target="_blank">
+                    🗺️ Lihat lokasi di Google Maps
+                </a>
+                `;
+
+
+            cariWilayahTerdekat(
+                latitude,
+                longitude
+            );
+
+        },
+
+
+        function(error){
+
+            if(error.code === 1){
+
+                ubahStatusLokasi(
+                    "❌ Izin lokasi ditolak."
+                );
+
+                lokasiPengguna.innerHTML =
+                    `
+                    GPS belum dapat digunakan.
+                    <br><br>
+                    <b>Aktifkan Lokasi/GPS pada HP</b>,
+                    kemudian izinkan akses lokasi untuk browser.
+                    <br><br>
+                    Setelah itu tekan tombol
+                    <b>📍 Gunakan Lokasi Saya</b>.
+                    `;
+
+                return;
+            }
+
+
+            if(error.code === 2){
+
+                ubahStatusLokasi(
+                    "⚠️ Lokasi tidak tersedia."
+                );
+
+                lokasiPengguna.innerHTML =
+                    `
+                    Pastikan GPS/Lokasi HP aktif,
+                    lalu coba kembali.
+                    `;
+
+                return;
+            }
+
+
+            if(error.code === 3){
+
+                ubahStatusLokasi(
+                    "⚠️ Pengambilan lokasi terlalu lama."
+                );
+
+                lokasiPengguna.innerHTML =
+                    "Coba aktifkan GPS dan tekan tombol lokasi lagi.";
+
+                return;
+            }
+
+
+            ubahStatusLokasi(
+                "⚠️ Lokasi tidak dapat diperoleh."
+            );
+
+        },
+
+
+        {
+            enableHighAccuracy:true,
+            timeout:20000,
+            maximumAge:0
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   TOMBOL LOKASI
+   ===================================================== */
+
+gunakanLokasi.addEventListener(
+    "click",
+    function(){
+
+        mintaLokasi();
+
+    }
+);
+
+
+/* =====================================================
+   HITUNG JARAK
+   ===================================================== */
+
+function hitungJarak(
+    lat1,
+    lon1,
+    lat2,
+    lon2
+){
+
+    const R = 6371;
+
+    const dLat =
+        (lat2-lat1) *
+        Math.PI / 180;
+
+    const dLon =
+        (lon2-lon1) *
+        Math.PI / 180;
+
+
+    const a =
+        Math.sin(dLat/2) *
+        Math.sin(dLat/2)
+
+        +
+
+        Math.cos(
+            lat1 *
+            Math.PI / 180
+        )
+
+        *
+
+        Math.cos(
+            lat2 *
+            Math.PI / 180
+        )
+
+        *
+
+        Math.sin(dLon/2) *
+        Math.sin(dLon/2);
+
+
+    const c =
+        2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1-a)
+        );
+
+
+    return R*c;
+
+}
+
+
+/* =====================================================
+   CARI WILAYAH TERDEKAT
+   ===================================================== */
+
+function cariWilayahTerdekat(
+    latitude,
+    longitude
+){
+
+    let wilayahTerdekat = null;
+
+    let jarakTerdekat =
+        Infinity;
+
+
+    Object.keys(wilayahData)
+    .forEach(function(nama){
+
+        const data =
+            wilayahData[nama];
+
+
+        const jarak =
+            hitungJarak(
+                latitude,
+                longitude,
+                data.latitude,
+                data.longitude
+            );
+
+
+        if(jarak < jarakTerdekat){
+
+            jarakTerdekat =
+                jarak;
+
+            wilayahTerdekat =
+                nama;
+
+        }
+
+    });
+
+
+    if(wilayahTerdekat){
+
+        tampilkanHasil(
+            wilayahTerdekat,
+            jarakTerdekat
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   IKON MUSIM
+   ===================================================== */
+
+function iconMusim(musim){
+
+    if(
+        musim ===
+        "Cenderung Basah"
+    ){
+
+        return "🌧️";
+
+    }
+
+
+    if(
+        musim ===
+        "Cenderung Kering"
+    ){
+
+        return "☀️";
+
+    }
+
+
+    return "🌤️";
+
+}
+
+
+/* =====================================================
    REKOMENDASI
-   ========================================= */
+   ===================================================== */
 
-function buatRekomendasi(musim){
+function buatRekomendasi(
+    musim
+){
 
-    if(musim === "Cenderung Basah"){
+    if(
+        musim ===
+        "Cenderung Basah"
+    ){
 
         return `
-        <strong>🌧️ Rekomendasi Kondisi Basah</strong>
+        <strong>
+            🌧️ Rekomendasi Kondisi Basah
+        </strong>
 
         <p>
-        Kondisi wilayah cenderung basah.
-        Perhatikan drainase dan potensi genangan
-        pada lahan pertanian.
+            Kondisi wilayah terdeteksi cenderung basah.
+            Perhatikan drainase dan kondisi lahan.
         </p>
 
         <ul>
             <li>Periksa saluran drainase.</li>
+            <li>Perhatikan kemungkinan genangan.</li>
             <li>Hindari penyiraman berlebihan.</li>
-            <li>Pantau kondisi penyakit tanaman.</li>
-            <li>Perhatikan kondisi tanah setelah hujan.</li>
+            <li>Pantau kondisi tanaman.</li>
         </ul>
         `;
+
     }
 
 
-    if(musim === "Cenderung Kering"){
+    if(
+        musim ===
+        "Cenderung Kering"
+    ){
 
         return `
-        <strong>☀️ Rekomendasi Kondisi Kering</strong>
+        <strong>
+            ☀️ Rekomendasi Kondisi Kering
+        </strong>
 
         <p>
-        Kondisi wilayah cenderung kering.
-        Ketersediaan air perlu diperhatikan
-        selama kegiatan budidaya.
+            Kondisi wilayah terdeteksi cenderung kering.
+            Perhatikan ketersediaan air untuk tanaman.
         </p>
 
         <ul>
@@ -798,180 +1389,201 @@ function buatRekomendasi(musim){
             <li>Manfaatkan penampungan air.</li>
         </ul>
         `;
+
     }
 
 
     return `
-    <strong>🌤️ Rekomendasi Kondisi Peralihan</strong>
+    <strong>
+        🌤️ Rekomendasi Kondisi Peralihan
+    </strong>
 
     <p>
-    Wilayah berada pada kondisi peralihan.
-    Pantau perubahan cuaca sebelum menentukan
-    kegiatan pertanian.
+        Kondisi wilayah berada pada masa peralihan.
+        Pantau perubahan cuaca dan kondisi tanah.
     </p>
 
     <ul>
-        <li>Pantau prakiraan hujan.</li>
+        <li>Pantau perubahan curah hujan.</li>
         <li>Periksa kelembapan tanah.</li>
         <li>Sesuaikan penyiraman.</li>
-        <li>Perhatikan perubahan cuaca.</li>
+        <li>Pantau kondisi tanaman.</li>
     </ul>
     `;
+
 }
 
 
-/* =========================================
-   TAMPILKAN HASIL WILAYAH
-   ========================================= */
+/* =====================================================
+   TAMPILKAN HASIL
+   ===================================================== */
 
-function tampilkanWilayah(nama){
+function tampilkanHasil(
+    nama,
+    jarak
+){
 
-    const data = wilayahData[nama];
+    const data =
+        wilayahData[nama];
 
-    if(!data){
-        alert("Silakan pilih wilayah terlebih dahulu.");
-        return;
-    }
 
     statusMusim.innerHTML =
-        iconMusim(data.musim) + " " + data.musim;
+        iconMusim(data.musim) +
+        " " +
+        data.musim;
+
 
     curahHujan.innerHTML =
-        data.curahHujan + " mm";
+        data.curahHujan +
+        " mm";
+
 
     suhu.innerHTML =
-        data.suhu + "°C";
+        data.suhu +
+        "°C";
+
 
     kelembapan.innerHTML =
-        data.kelembapan + "%";
+        data.kelembapan +
+        "%";
+
 
     rekomendasi.innerHTML =
-        buatRekomendasi(data.musim);
+        buatRekomendasi(
+            data.musim
+        );
 
-    hasilMusim.style.display = "block";
 
-    hasilMusim.classList.remove("hasil-muncul");
+    hasilMusim.style.display =
+        "block";
+
+
+    hasilMusim.classList.remove(
+        "muncul"
+    );
+
 
     setTimeout(function(){
 
-        hasilMusim.classList.add("hasil-muncul");
+        hasilMusim.classList.add(
+            "muncul"
+        );
 
     },50);
+
+
+    ubahStatusLokasi(
+        "✅ Lokasi aktif • Wilayah terdekat: " +
+        nama
+    );
+
+
+    lokasiPengguna.innerHTML +=
+        `
+        <br>
+        <b>📌 Wilayah terdekat:</b>
+        ${nama}
+        <br>
+        Jarak sekitar:
+        ${jarak.toFixed(1)} km
+        `;
 
 }
 
 
-/* =========================================
-   TOMBOL CEK MUSIM
-   ========================================= */
-
-cekMusim.addEventListener("click",function(){
-
-    const wilayah =
-        wilayahSelect.value;
-
-    if(wilayah === ""){
-
-        alert(
-            "🌱 Silakan pilih kabupaten atau kota terlebih dahulu."
-        );
-
-        return;
-    }
-
-    tampilkanWilayah(wilayah);
-
-});
-
-
-/* =========================================
+/* =====================================================
    ANALISIS DATA MANUAL
-   ========================================= */
+   ===================================================== */
 
-function analisisManual(hujan,suhuData,kelembapanData){
-
-    let musim;
-
-    /*
-       Aturan klasifikasi sederhana.
-       Data ini merupakan simulasi/demo,
-       bukan pengganti data meteorologi resmi.
-    */
+function analisisManual(
+    hujan,
+    suhuData,
+    kelembapanData
+){
 
     if(
         hujan >= 170 ||
         kelembapanData >= 82
     ){
 
-        musim = "Cenderung Basah";
+        return "Cenderung Basah";
 
     }
 
-    else if(
+
+    if(
         hujan <= 100 ||
         kelembapanData <= 70
     ){
 
-        musim = "Cenderung Kering";
+        return "Cenderung Kering";
 
     }
 
-    else{
 
-        musim = "Peralihan";
+    return "Peralihan";
 
-    }
-
-    return musim;
 }
 
 
-/* =========================================
+/* =====================================================
    TOMBOL ANALISIS MANUAL
-   ========================================= */
+   ===================================================== */
 
-analisisDataButton.addEventListener(
+document.getElementById(
+    "analisisData"
+).addEventListener(
     "click",
     function(){
 
-        const hujan =
-            Number(
-                document.getElementById(
-                    "inputCurahHujan"
-                ).value
+        const hujanInput =
+            document.getElementById(
+                "inputCurahHujan"
             );
 
-        const suhuData =
-            Number(
-                document.getElementById(
-                    "inputSuhu"
-                ).value
+        const suhuInput =
+            document.getElementById(
+                "inputSuhu"
             );
 
-        const kelembapanData =
-            Number(
-                document.getElementById(
-                    "inputKelembapan"
-                ).value
+        const kelembapanInput =
+            document.getElementById(
+                "inputKelembapan"
             );
 
 
         if(
-            document.getElementById(
-                "inputCurahHujan"
-            ).value === "" ||
-
-            document.getElementById(
-                "inputSuhu"
-            ).value === "" ||
-
-            document.getElementById(
-                "inputKelembapan"
-            ).value === ""
+            hujanInput.value === "" ||
+            suhuInput.value === "" ||
+            kelembapanInput.value === ""
         ){
 
             alert(
-                "⚠️ Lengkapi semua data terlebih dahulu."
+                "⚠️ Silakan lengkapi semua data."
+            );
+
+            return;
+        }
+
+
+        const hujan =
+            Number(hujanInput.value);
+
+        const suhuData =
+            Number(suhuInput.value);
+
+        const kelembapanData =
+            Number(
+                kelembapanInput.value
+            );
+
+
+        if(
+            hujan < 0
+        ){
+
+            alert(
+                "Curah hujan tidak boleh negatif."
             );
 
             return;
@@ -984,7 +1596,7 @@ analisisDataButton.addEventListener(
         ){
 
             alert(
-                "Kelembapan harus berada antara 0 sampai 100%."
+                "Kelembapan harus antara 0 sampai 100%."
             );
 
             return;
@@ -999,24 +1611,29 @@ analisisDataButton.addEventListener(
             );
 
 
-        hasilManual.style.display = "block";
+        hasilManual.style.display =
+            "block";
+
 
         hasilManualJudul.innerHTML =
             iconMusim(musim) +
-            " Hasil: " +
+            " " +
             musim;
+
 
         hasilManualText.innerHTML =
             buatRekomendasi(musim);
 
+
         hasilManual.classList.remove(
-            "hasil-muncul"
+            "muncul"
         );
+
 
         setTimeout(function(){
 
             hasilManual.classList.add(
-                "hasil-muncul"
+                "muncul"
             );
 
         },50);
@@ -1025,32 +1642,37 @@ analisisDataButton.addEventListener(
 );
 
 
-/* =========================================
-   AUTO ANALISIS SAAT PILIH WILAYAH
-   ========================================= */
+/* =====================================================
+   OTOMATIS MEMINTA LOKASI
+   ===================================================== */
 
-wilayahSelect.addEventListener(
-    "change",
+window.addEventListener(
+    "load",
     function(){
 
-        if(this.value !== ""){
+        setTimeout(
+            function(){
 
-            tampilkanWilayah(
-                this.value
-            );
+                mintaLokasi();
 
-        }
+            },
+            1000
+        );
 
     }
 );
 
 
-/* =========================================
-   KONSOLE
-   ========================================= */
+/* =====================================================
+   CONSOLE
+   ===================================================== */
 
 console.log(
-    "🌱 AGRI-SIAGA berhasil dijalankan."
+    "🌱 AGRI-SIAGA aktif."
+);
+
+console.log(
+    "📍 Sistem GPS siap digunakan."
 );
 
 </script>

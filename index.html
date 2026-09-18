@@ -1,483 +1,205 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#11643d">
-<meta name="description" content="AGRI-SIAGA - Sistem Informasi Pertanian Pintar">
-<title>AGRI-SIAGA | Smart Agriculture</title>
+
+<title>CORONA - Agricultural Fire Fighting Robot</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
+    margin:0;
+    overflow:hidden;
     font-family:Arial,Helvetica,sans-serif;
-    color:#173b29;
-    min-height:100vh;
-    background:
-        linear-gradient(
-            rgba(235,250,240,.94),
-            rgba(248,255,250,.97)
-        ),
-        radial-gradient(
-            circle at 15% 20%,
-            #b8e6c8,
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 75%,
-            #b4e3c4,
-            transparent 28%
-        );
-}
-
-/* =========================
-   NAVBAR
-========================= */
-
-nav{
-    position:sticky;
-    top:0;
-    z-index:999;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 7%;
-    background:#11643d;
+    background:#07110b;
     color:white;
-    box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
-.logo{
-    font-size:22px;
+#app{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+
+#canvas-container{
+    position:absolute;
+    inset:0;
+}
+
+canvas{
+    display:block;
+}
+
+.interface{
+    position:absolute;
+    top:20px;
+    left:20px;
+    z-index:10;
+    background:rgba(5,15,9,.82);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(90,255,140,.3);
+    border-radius:16px;
+    padding:18px;
+    width:300px;
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+.title{
+    font-size:24px;
     font-weight:800;
-}
-
-.logo span{
-    color:#bdf4cc;
-}
-
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:25px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:14px;
-}
-
-nav a:hover{
-    color:#bdf4cc;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    width:90%;
-    max-width:1150px;
-    margin:35px auto 25px;
-    padding:55px 30px;
-    border-radius:30px;
-    text-align:center;
-    color:white;
-    background:
-        linear-gradient(
-            135deg,
-            #11643d,
-            #198754
-        );
-    box-shadow:0 15px 40px rgba(17,100,61,.25);
-}
-
-.hero h1{
-    font-size:44px;
-    margin-bottom:14px;
-}
-
-.hero p{
-    max-width:760px;
-    margin:auto;
-    line-height:1.8;
-    font-size:16px;
-}
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container{
-    width:90%;
-    max-width:1150px;
-    margin:auto;
-}
-
-.card{
-    background:rgba(255,255,255,.96);
-    border:1px solid #d9eee0;
-    border-radius:25px;
-    padding:28px;
-    margin-bottom:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.07);
-}
-
-.card h2{
-    color:#11643d;
-    margin-bottom:10px;
+    color:#75ff9c;
+    margin-bottom:4px;
 }
 
 .subtitle{
-    color:#668071;
-    line-height:1.7;
-    margin-bottom:22px;
-}
-
-/* =========================
-   LOCATION CARD
-========================= */
-
-.location-box{
-    padding:22px;
-    background:#f0faf3;
-    border-radius:20px;
-    border:1px solid #d5ebdc;
-    margin-top:15px;
-}
-
-.location-status{
-    font-weight:bold;
-    color:#11643d;
-    margin-bottom:10px;
-    line-height:1.6;
-}
-
-.location-detail{
-    color:#61756a;
-    line-height:1.7;
-    margin-bottom:18px;
-}
-
-.gps-loading{
-    display:inline-block;
-    width:17px;
-    height:17px;
-    border:3px solid #cde8d7;
-    border-top-color:#198754;
-    border-radius:50%;
-    animation:putar .8s linear infinite;
-    vertical-align:middle;
-    margin-right:7px;
-}
-
-@keyframes putar{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-button{
-    border:0;
-    padding:14px 22px;
-    border-radius:14px;
-    background:#198754;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:15px;
-    transition:.25s;
-}
-
-button:hover{
-    background:#11643d;
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(17,100,61,.2);
-}
-
-button:active{
-    transform:scale(.98);
-}
-
-.center{
-    text-align:center;
-}
-
-/* =========================
-   RESULT
-========================= */
-
-#hasilMusim{
-    display:none;
+    font-size:12px;
+    opacity:.7;
+    margin-bottom:15px;
 }
 
 .status{
-    padding:28px;
-    border-radius:22px;
-    text-align:center;
-    background:#e9f8ef;
-    margin:20px 0;
-}
-
-.status p{
-    color:#678171;
-    margin-bottom:8px;
-}
-
-.status h3{
-    color:#11643d;
-    font-size:29px;
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.stat{
-    padding:25px 15px;
-    text-align:center;
-    background:#f7fff9;
-    border:1px solid #dcefe2;
-    border-radius:20px;
-}
-
-.stat-icon{
-    font-size:35px;
-    margin-bottom:10px;
-}
-
-.stat h4{
-    color:#688074;
-    margin-bottom:8px;
-}
-
-.stat strong{
-    color:#11643d;
-    font-size:25px;
-}
-
-/* =========================
-   RECOMMENDATION
-========================= */
-
-.rekomendasi{
-    margin-top:22px;
-    padding:23px;
-    border-left:6px solid #198754;
-    border-radius:17px;
-    background:#f0faf3;
-    line-height:1.7;
-}
-
-.rekomendasi strong{
-    color:#11643d;
-    font-size:19px;
-}
-
-.rekomendasi ul{
-    margin:10px 0 0 20px;
-}
-
-/* =========================
-   FORM
-========================= */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.form-group{
     display:flex;
-    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    margin-bottom:15px;
 }
 
-.form-group label{
-    font-weight:bold;
-    margin-bottom:8px;
+.status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#35ff70;
+    box-shadow:0 0 15px #35ff70;
 }
 
-select,
-input{
-    width:100%;
-    padding:14px;
-    border-radius:14px;
-    border:2px solid #d8ebdf;
-    background:#fbfffc;
-    outline:none;
-    font-size:15px;
-}
-
-select:focus,
-input:focus{
-    border-color:#198754;
-}
-
-.btn-wrap{
-    margin-top:20px;
-    text-align:center;
-}
-
-/* =========================
-   INFO
-========================= */
-
-.info-grid{
+.info{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
 }
 
 .info-box{
-    padding:22px;
-    background:#f8fffa;
-    border:1px solid #dcefe2;
-    border-radius:20px;
+    background:rgba(255,255,255,.06);
+    border-radius:10px;
+    padding:10px;
 }
 
-.info-icon{
-    font-size:32px;
-    margin-bottom:10px;
+.info-box small{
+    display:block;
+    opacity:.55;
+    font-size:10px;
+    margin-bottom:4px;
 }
 
-.info-box h3{
-    color:#11643d;
+.info-box strong{
+    font-size:13px;
+}
+
+.controls{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    z-index:10;
+    background:rgba(5,15,9,.8);
+    border:1px solid rgba(90,255,140,.25);
+    border-radius:14px;
+    padding:12px;
+}
+
+.controls-title{
+    font-size:12px;
     margin-bottom:8px;
+    opacity:.7;
 }
 
-.info-box p{
-    color:#66786d;
-    line-height:1.6;
-    font-size:14px;
+.keys{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-/* =========================
-   MANUAL RESULT
-========================= */
-
-#hasilManual{
-    display:none;
-    margin-top:20px;
-    padding:22px;
-    border-radius:18px;
-    background:#effaf3;
-    border-left:6px solid #198754;
-}
-
-/* =========================
-   MAP
-========================= */
-
-.map-link{
-    display:inline-block;
-    margin-top:10px;
-    color:#198754;
+.key{
+    min-width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#17261b;
+    border:1px solid #3c6045;
+    border-radius:7px;
+    font-size:12px;
     font-weight:bold;
-    text-decoration:none;
 }
 
-.map-link:hover{
-    text-decoration:underline;
+.buttons{
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    z-index:10;
+    display:flex;
+    gap:8px;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    margin-top:40px;
-    padding:28px;
-    text-align:center;
-    background:#11643d;
+button{
+    border:1px solid rgba(100,255,150,.35);
+    background:rgba(8,25,13,.9);
     color:white;
-    line-height:1.8;
+    padding:11px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-footer strong{
-    color:#bdf4cc;
+button:hover{
+    background:#173d22;
 }
 
-/* =========================
-   ANIMATION
-========================= */
-
-.muncul{
-    animation:muncul .6s ease;
+.fire-status{
+    margin-top:12px;
+    padding:10px;
+    border-radius:9px;
+    background:rgba(255,70,30,.12);
+    border:1px solid rgba(255,80,40,.25);
+    color:#ff9c82;
+    font-size:11px;
 }
 
-@keyframes muncul{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+#loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#07110b;
+    z-index:100;
+    font-weight:bold;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:800px){
-
-    nav{
-        padding:15px 5%;
+@media(max-width:700px){
+    .interface{
+        width:250px;
+        top:10px;
+        left:10px;
+        padding:13px;
     }
 
-    nav ul{
-        display:none;
+    .title{
+        font-size:19px;
     }
 
-    .hero{
-        margin-top:20px;
-        padding:40px 20px;
+    .controls{
+        bottom:10px;
+        left:10px;
     }
 
-    .hero h1{
-        font-size:34px;
-    }
-
-    .hero p{
-        font-size:14px;
-    }
-
-    .stats,
-    .form-grid,
-    .info-grid{
-        grid-template-columns:1fr;
-    }
-
-    .card{
-        padding:21px;
-    }
-
-    button{
-        width:100%;
+    .buttons{
+        right:10px;
+        bottom:10px;
     }
 }
 </style>
@@ -485,1198 +207,1681 @@ footer strong{
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<div id="app">
 
-<nav>
+<div id="loading">
+    MEMUAT SISTEM CORONA...
+</div>
 
-    <div class="logo">
-        🌱 AGRI-<span>SIAGA</span>
+<div id="canvas-container"></div>
+
+<div class="interface">
+
+    <div class="title">
+        CORONA
     </div>
 
-    <ul>
-        <li>
-            <a href="#beranda">Beranda</a>
-        </li>
-
-        <li>
-            <a href="#lokasi">Lokasi</a>
-        </li>
-
-        <li>
-            <a href="#analisis">Analisis</a>
-        </li>
-
-        <li>
-            <a href="#tentang">Tentang</a>
-        </li>
-    </ul>
-
-</nav>
-
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero" id="beranda">
-
-    <h1>🌾 AGRI-SIAGA</h1>
-
-    <p>
-        Sistem Informasi Pertanian Pintar yang membantu pengguna
-        mengetahui kondisi wilayah berdasarkan lokasi,
-        memahami kondisi musim, serta mendapatkan rekomendasi
-        pengelolaan pertanian.
-    </p>
-
-</section>
-
-
-<main class="container">
-
-
-<!-- =========================
-     LOKASI OTOMATIS
-========================= -->
-
-<section class="card" id="lokasi">
-
-    <h2>📍 Lokasi Anda</h2>
-
-    <p class="subtitle">
-        AGRI-SIAGA membutuhkan akses lokasi untuk mengetahui
-        posisi pengguna secara otomatis. Pastikan GPS/Lokasi
-        pada HP aktif dan izinkan browser mengakses lokasi.
-    </p>
-
-    <div class="location-box">
-
-        <div
-            class="location-status"
-            id="statusLokasi">
-
-            <span class="gps-loading"></span>
-            Meminta izin lokasi...
-        </div>
-
-        <div
-            class="location-detail"
-            id="lokasiPengguna">
-
-            AGRI-SIAGA sedang mencari lokasi Anda.
-        </div>
-
-        <button id="gunakanLokasi">
-
-            📍 Gunakan Lokasi Saya
-
-        </button>
-
+    <div class="subtitle">
+        Cybernetic Observation and Remote Solar-Powered Network for Agricultural Fire Mitigation
     </div>
-
-</section>
-
-
-<!-- =========================
-     HASIL MUSIM
-========================= -->
-
-<section
-    class="card"
-    id="hasilMusim">
-
-    <h2>
-        📊 Kondisi Wilayah Anda
-    </h2>
 
     <div class="status">
-
-        <p>
-            Kondisi musim
-        </p>
-
-        <h3 id="statusMusim">
-            🌤️ Belum dianalisis
-        </h3>
-
+        <span class="status-dot"></span>
+        SISTEM ONLINE
     </div>
 
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                🌧️
-            </div>
-
-            <h4>
-                Curah Hujan
-            </h4>
-
-            <strong id="curahHujan">
-                -
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                🌡️
-            </div>
-
-            <h4>
-                Suhu
-            </h4>
-
-            <strong id="suhu">
-                -
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                💧
-            </div>
-
-            <h4>
-                Kelembapan
-            </h4>
-
-            <strong id="kelembapan">
-                -
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="rekomendasi"
-        id="rekomendasi">
-
-        Menunggu hasil analisis...
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ANALISIS MANUAL
-========================= -->
-
-<section
-    class="card"
-    id="analisis">
-
-    <h2>
-        🧠 Analisis Data Pertanian
-    </h2>
-
-    <p class="subtitle">
-        Masukkan data lingkungan secara manual untuk
-        mendapatkan klasifikasi kondisi wilayah.
-    </p>
-
-
-    <div class="form-grid">
-
-        <div class="form-group">
-
-            <label>
-                🌧️ Curah Hujan (mm)
-            </label>
-
-            <input
-                type="number"
-                id="inputCurahHujan"
-                min="0"
-                placeholder="Contoh: 150">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                🌡️ Suhu (°C)
-            </label>
-
-            <input
-                type="number"
-                id="inputSuhu"
-                placeholder="Contoh: 28">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                💧 Kelembapan (%)
-            </label>
-
-            <input
-                type="number"
-                id="inputKelembapan"
-                min="0"
-                max="100"
-                placeholder="Contoh: 78">
-
-        </div>
-
-    </div>
-
-
-    <div class="btn-wrap">
-
-        <button id="analisisData">
-            🤖 Analisis Data
-        </button>
-
-    </div>
-
-
-    <div id="hasilManual">
-
-        <h3 id="hasilManualJudul"></h3>
-
-        <div id="hasilManualText"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TENTANG
-========================= -->
-
-<section
-    class="card"
-    id="tentang">
-
-    <h2>
-        🌱 Tentang AGRI-SIAGA
-    </h2>
-
-    <p class="subtitle">
-        AGRI-SIAGA merupakan konsep sistem informasi pertanian
-        yang memanfaatkan teknologi digital untuk membantu
-        pengguna memahami kondisi lingkungan pertanian.
-    </p>
-
-
-    <div class="info-grid">
+    <div class="info">
 
         <div class="info-box">
-
-            <div class="info-icon">
-                📍
-            </div>
-
-            <h3>
-                Lokasi Otomatis
-            </h3>
-
-            <p>
-                Menggunakan GPS perangkat untuk mendapatkan
-                koordinat lokasi pengguna setelah izin diberikan.
-            </p>
-
+            <small>MODE</small>
+            <strong>FIRE MITIGATION</strong>
         </div>
 
-
         <div class="info-box">
-
-            <div class="info-icon">
-                🌦️
-            </div>
-
-            <h3>
-                Kondisi Musim
-            </h3>
-
-            <p>
-                Menampilkan klasifikasi kondisi wilayah menjadi
-                cenderung basah, cenderung kering, atau peralihan.
-            </p>
-
+            <small>ENERGI</small>
+            <strong id="energy">87%</strong>
         </div>
 
+        <div class="info-box">
+            <small>SUHU</small>
+            <strong id="temperature">42°C</strong>
+        </div>
 
         <div class="info-box">
-
-            <div class="info-icon">
-                🌾
-            </div>
-
-            <h3>
-                Rekomendasi Pertanian
-            </h3>
-
-            <p>
-                Memberikan rekomendasi umum berdasarkan kondisi
-                lingkungan yang ditampilkan sistem.
-            </p>
-
+            <small>KECEPATAN</small>
+            <strong id="speed">0 km/h</strong>
         </div>
 
     </div>
 
-</section>
+    <div class="fire-status">
+        🔥 SENSOR KEBAKARAN AKTIF<br>
+        Pemantauan area pertanian sedang berlangsung
+    </div>
 
-</main>
+</div>
 
+<div class="controls">
 
-<!-- =========================
-     FOOTER
-========================= -->
+    <div class="controls-title">
+        KONTROL ROBOT
+    </div>
 
-<footer>
+    <div class="keys">
 
-    <strong>
-        🌱 AGRI-SIAGA
-    </strong>
+        <div class="key">W</div>
+        <div class="key">A</div>
+        <div class="key">S</div>
+        <div class="key">D</div>
 
-    <br>
+        <div class="key">Q</div>
+        <div class="key">E</div>
 
-    Sistem Informasi Pertanian Pintar
+    </div>
 
-    <br>
+</div>
 
-    © 2026 AGRI-SIAGA
+<div class="buttons">
 
-</footer>
+    <button id="autoBtn">
+        🔄 Auto Rotate
+    </button>
 
+    <button id="resetBtn">
+        ↺ Reset
+    </button>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
 <script>
 
-/* =====================================================
-   DATA WILAYAH CONTOH
-   ===================================================== */
+let scene;
+let camera;
+let renderer;
 
-const wilayahData = {
+let corona;
 
-    "Jombang":{
-        latitude:-7.545,
-        longitude:112.233,
-        musim:"Peralihan",
-        curahHujan:145,
-        suhu:28,
-        kelembapan:78
-    },
+let wheels=[];
 
-    "Kediri":{
-        latitude:-7.816,
-        longitude:112.011,
-        musim:"Cenderung Basah",
-        curahHujan:180,
-        suhu:27,
-        kelembapan:82
-    },
+let cameraHead;
+let waterCannon;
 
-    "Malang":{
-        latitude:-7.981,
-        longitude:112.630,
-        musim:"Cenderung Basah",
-        curahHujan:210,
-        suhu:25,
-        kelembapan:85
-    },
+let autoRotate=true;
 
-    "Mojokerto":{
-        latitude:-7.470,
-        longitude:112.440,
-        musim:"Peralihan",
-        curahHujan:155,
-        suhu:28,
-        kelembapan:79
-    },
+let mouseDown=false;
+let lastX=0;
+let lastY=0;
 
-    "Nganjuk":{
-        latitude:-7.605,
-        longitude:111.904,
-        musim:"Cenderung Kering",
-        curahHujan:90,
-        suhu:29,
-        kelembapan:70
-    },
+let orbitX=0;
+let orbitY=.35;
 
-    "Madiun":{
-        latitude:-7.630,
-        longitude:111.523,
-        musim:"Cenderung Kering",
-        curahHujan:85,
-        suhu:30,
-        kelembapan:68
-    },
+let distance=16;
 
-    "Ponorogo":{
-        latitude:-7.865,
-        longitude:111.469,
-        musim:"Peralihan",
-        curahHujan:135,
-        suhu:28,
-        kelembapan:75
-    },
+let keys={};
 
-    "Banyuwangi":{
-        latitude:-8.219,
-        longitude:114.369,
-        musim:"Cenderung Basah",
-        curahHujan:225,
-        suhu:26,
-        kelembapan:86
-    },
+let fireParticles=[];
+let smokeParticles=[];
 
-    "Blitar":{
-        latitude:-8.098,
-        longitude:112.168,
-        musim:"Peralihan",
-        curahHujan:150,
-        suhu:27,
-        kelembapan:79
-    },
+let clock=new THREE.Clock();
 
-    "Tulungagung":{
-        latitude:-8.065,
-        longitude:111.902,
-        musim:"Peralihan",
-        curahHujan:140,
-        suhu:28,
-        kelembapan:77
-    }
 
-};
+/* ================================
+   SCENE
+================================ */
 
+scene=new THREE.Scene();
 
-/* =====================================================
-   ELEMENT HTML
-   ===================================================== */
+scene.background=new THREE.Color(0x07110b);
 
-const statusLokasi =
-    document.getElementById("statusLokasi");
-
-const lokasiPengguna =
-    document.getElementById("lokasiPengguna");
-
-const gunakanLokasi =
-    document.getElementById("gunakanLokasi");
-
-const hasilMusim =
-    document.getElementById("hasilMusim");
-
-const statusMusim =
-    document.getElementById("statusMusim");
-
-const curahHujan =
-    document.getElementById("curahHujan");
-
-const suhu =
-    document.getElementById("suhu");
-
-const kelembapan =
-    document.getElementById("kelembapan");
-
-const rekomendasi =
-    document.getElementById("rekomendasi");
-
-const hasilManual =
-    document.getElementById("hasilManual");
-
-const hasilManualJudul =
-    document.getElementById("hasilManualJudul");
-
-const hasilManualText =
-    document.getElementById("hasilManualText");
-
-
-/* =====================================================
-   FUNGSI STATUS LOKASI
-   ===================================================== */
-
-function ubahStatusLokasi(teks){
-
-    statusLokasi.innerHTML = teks;
-
-}
-
-
-/* =====================================================
-   FUNGSI MEMINTA LOKASI
-   ===================================================== */
-
-function mintaLokasi(){
-
-    if(!navigator.geolocation){
-
-        ubahStatusLokasi(
-            "❌ Browser tidak mendukung GPS."
-        );
-
-        lokasiPengguna.innerHTML =
-            "Silakan gunakan browser terbaru seperti Chrome, Edge, atau Safari.";
-
-        return;
-    }
-
-
-    ubahStatusLokasi(
-        '<span class="gps-loading"></span> Meminta akses lokasi...'
-    );
-
-    lokasiPengguna.innerHTML =
-        "Silakan pilih <b>Izinkan</b> ketika browser meminta akses lokasi.";
-
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position){
-
-            const latitude =
-                position.coords.latitude;
-
-            const longitude =
-                position.coords.longitude;
-
-            const akurasi =
-                position.coords.accuracy;
-
-
-            console.log(
-                "Latitude:",
-                latitude
-            );
-
-            console.log(
-                "Longitude:",
-                longitude
-            );
-
-            console.log(
-                "Akurasi:",
-                akurasi
-            );
-
-
-            ubahStatusLokasi(
-                "✅ Lokasi berhasil diaktifkan."
-            );
-
-
-            lokasiPengguna.innerHTML =
-                `
-                <b>📍 Lokasi GPS terdeteksi</b><br>
-                Latitude:
-                ${latitude.toFixed(5)}
-                <br>
-                Longitude:
-                ${longitude.toFixed(5)}
-                <br>
-                Akurasi sekitar:
-                ${Math.round(akurasi)} meter
-                <br>
-                <a
-                    class="map-link"
-                    href="https://www.google.com/maps?q=${latitude},${longitude}"
-                    target="_blank">
-                    🗺️ Lihat lokasi di Google Maps
-                </a>
-                `;
-
-
-            cariWilayahTerdekat(
-                latitude,
-                longitude
-            );
-
-        },
-
-
-        function(error){
-
-            if(error.code === 1){
-
-                ubahStatusLokasi(
-                    "❌ Izin lokasi ditolak."
-                );
-
-                lokasiPengguna.innerHTML =
-                    `
-                    GPS belum dapat digunakan.
-                    <br><br>
-                    <b>Aktifkan Lokasi/GPS pada HP</b>,
-                    kemudian izinkan akses lokasi untuk browser.
-                    <br><br>
-                    Setelah itu tekan tombol
-                    <b>📍 Gunakan Lokasi Saya</b>.
-                    `;
-
-                return;
-            }
-
-
-            if(error.code === 2){
-
-                ubahStatusLokasi(
-                    "⚠️ Lokasi tidak tersedia."
-                );
-
-                lokasiPengguna.innerHTML =
-                    `
-                    Pastikan GPS/Lokasi HP aktif,
-                    lalu coba kembali.
-                    `;
-
-                return;
-            }
-
-
-            if(error.code === 3){
-
-                ubahStatusLokasi(
-                    "⚠️ Pengambilan lokasi terlalu lama."
-                );
-
-                lokasiPengguna.innerHTML =
-                    "Coba aktifkan GPS dan tekan tombol lokasi lagi.";
-
-                return;
-            }
-
-
-            ubahStatusLokasi(
-                "⚠️ Lokasi tidak dapat diperoleh."
-            );
-
-        },
-
-
-        {
-            enableHighAccuracy:true,
-            timeout:20000,
-            maximumAge:0
-        }
-
-    );
-
-}
-
-
-/* =====================================================
-   TOMBOL LOKASI
-   ===================================================== */
-
-gunakanLokasi.addEventListener(
-    "click",
-    function(){
-
-        mintaLokasi();
-
-    }
+scene.fog=new THREE.Fog(
+    0x07110b,
+    20,
+    70
 );
 
 
-/* =====================================================
-   HITUNG JARAK
-   ===================================================== */
-
-function hitungJarak(
-    lat1,
-    lon1,
-    lat2,
-    lon2
-){
-
-    const R = 6371;
-
-    const dLat =
-        (lat2-lat1) *
-        Math.PI / 180;
-
-    const dLon =
-        (lon2-lon1) *
-        Math.PI / 180;
-
-
-    const a =
-        Math.sin(dLat/2) *
-        Math.sin(dLat/2)
-
-        +
-
-        Math.cos(
-            lat1 *
-            Math.PI / 180
-        )
-
-        *
-
-        Math.cos(
-            lat2 *
-            Math.PI / 180
-        )
-
-        *
-
-        Math.sin(dLon/2) *
-        Math.sin(dLon/2);
-
-
-    const c =
-        2 *
-        Math.atan2(
-            Math.sqrt(a),
-            Math.sqrt(1-a)
-        );
-
-
-    return R*c;
-
-}
-
-
-/* =====================================================
-   CARI WILAYAH TERDEKAT
-   ===================================================== */
-
-function cariWilayahTerdekat(
-    latitude,
-    longitude
-){
-
-    let wilayahTerdekat = null;
-
-    let jarakTerdekat =
-        Infinity;
-
-
-    Object.keys(wilayahData)
-    .forEach(function(nama){
-
-        const data =
-            wilayahData[nama];
-
-
-        const jarak =
-            hitungJarak(
-                latitude,
-                longitude,
-                data.latitude,
-                data.longitude
-            );
-
-
-        if(jarak < jarakTerdekat){
-
-            jarakTerdekat =
-                jarak;
-
-            wilayahTerdekat =
-                nama;
-
-        }
-
-    });
-
-
-    if(wilayahTerdekat){
-
-        tampilkanHasil(
-            wilayahTerdekat,
-            jarakTerdekat
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   IKON MUSIM
-   ===================================================== */
-
-function iconMusim(musim){
-
-    if(
-        musim ===
-        "Cenderung Basah"
-    ){
-
-        return "🌧️";
-
-    }
-
-
-    if(
-        musim ===
-        "Cenderung Kering"
-    ){
-
-        return "☀️";
-
-    }
-
-
-    return "🌤️";
-
-}
-
-
-/* =====================================================
-   REKOMENDASI
-   ===================================================== */
-
-function buatRekomendasi(
-    musim
-){
-
-    if(
-        musim ===
-        "Cenderung Basah"
-    ){
-
-        return `
-        <strong>
-            🌧️ Rekomendasi Kondisi Basah
-        </strong>
-
-        <p>
-            Kondisi wilayah terdeteksi cenderung basah.
-            Perhatikan drainase dan kondisi lahan.
-        </p>
-
-        <ul>
-            <li>Periksa saluran drainase.</li>
-            <li>Perhatikan kemungkinan genangan.</li>
-            <li>Hindari penyiraman berlebihan.</li>
-            <li>Pantau kondisi tanaman.</li>
-        </ul>
-        `;
-
-    }
-
-
-    if(
-        musim ===
-        "Cenderung Kering"
-    ){
-
-        return `
-        <strong>
-            ☀️ Rekomendasi Kondisi Kering
-        </strong>
-
-        <p>
-            Kondisi wilayah terdeteksi cenderung kering.
-            Perhatikan ketersediaan air untuk tanaman.
-        </p>
-
-        <ul>
-            <li>Periksa kelembapan tanah.</li>
-            <li>Gunakan air secara efisien.</li>
-            <li>Perhatikan kebutuhan irigasi.</li>
-            <li>Manfaatkan penampungan air.</li>
-        </ul>
-        `;
-
-    }
-
-
-    return `
-    <strong>
-        🌤️ Rekomendasi Kondisi Peralihan
-    </strong>
-
-    <p>
-        Kondisi wilayah berada pada masa peralihan.
-        Pantau perubahan cuaca dan kondisi tanah.
-    </p>
-
-    <ul>
-        <li>Pantau perubahan curah hujan.</li>
-        <li>Periksa kelembapan tanah.</li>
-        <li>Sesuaikan penyiraman.</li>
-        <li>Pantau kondisi tanaman.</li>
-    </ul>
-    `;
-
-}
-
-
-/* =====================================================
-   TAMPILKAN HASIL
-   ===================================================== */
-
-function tampilkanHasil(
-    nama,
-    jarak
-){
-
-    const data =
-        wilayahData[nama];
-
-
-    statusMusim.innerHTML =
-        iconMusim(data.musim) +
-        " " +
-        data.musim;
-
-
-    curahHujan.innerHTML =
-        data.curahHujan +
-        " mm";
-
-
-    suhu.innerHTML =
-        data.suhu +
-        "°C";
-
-
-    kelembapan.innerHTML =
-        data.kelembapan +
-        "%";
-
-
-    rekomendasi.innerHTML =
-        buatRekomendasi(
-            data.musim
-        );
-
-
-    hasilMusim.style.display =
-        "block";
-
-
-    hasilMusim.classList.remove(
-        "muncul"
-    );
-
-
-    setTimeout(function(){
-
-        hasilMusim.classList.add(
-            "muncul"
-        );
-
-    },50);
-
-
-    ubahStatusLokasi(
-        "✅ Lokasi aktif • Wilayah terdekat: " +
-        nama
-    );
-
-
-    lokasiPengguna.innerHTML +=
-        `
-        <br>
-        <b>📌 Wilayah terdekat:</b>
-        ${nama}
-        <br>
-        Jarak sekitar:
-        ${jarak.toFixed(1)} km
-        `;
-
-}
-
-
-/* =====================================================
-   ANALISIS DATA MANUAL
-   ===================================================== */
-
-function analisisManual(
-    hujan,
-    suhuData,
-    kelembapanData
-){
-
-    if(
-        hujan >= 170 ||
-        kelembapanData >= 82
-    ){
-
-        return "Cenderung Basah";
-
-    }
-
-
-    if(
-        hujan <= 100 ||
-        kelembapanData <= 70
-    ){
-
-        return "Cenderung Kering";
-
-    }
-
-
-    return "Peralihan";
-
-}
-
-
-/* =====================================================
-   TOMBOL ANALISIS MANUAL
-   ===================================================== */
-
-document.getElementById(
-    "analisisData"
-).addEventListener(
-    "click",
-    function(){
-
-        const hujanInput =
-            document.getElementById(
-                "inputCurahHujan"
-            );
-
-        const suhuInput =
-            document.getElementById(
-                "inputSuhu"
-            );
-
-        const kelembapanInput =
-            document.getElementById(
-                "inputKelembapan"
-            );
-
-
-        if(
-            hujanInput.value === "" ||
-            suhuInput.value === "" ||
-            kelembapanInput.value === ""
-        ){
-
-            alert(
-                "⚠️ Silakan lengkapi semua data."
-            );
-
-            return;
-        }
-
-
-        const hujan =
-            Number(hujanInput.value);
-
-        const suhuData =
-            Number(suhuInput.value);
-
-        const kelembapanData =
-            Number(
-                kelembapanInput.value
-            );
-
-
-        if(
-            hujan < 0
-        ){
-
-            alert(
-                "Curah hujan tidak boleh negatif."
-            );
-
-            return;
-        }
-
-
-        if(
-            kelembapanData < 0 ||
-            kelembapanData > 100
-        ){
-
-            alert(
-                "Kelembapan harus antara 0 sampai 100%."
-            );
-
-            return;
-        }
-
-
-        const musim =
-            analisisManual(
-                hujan,
-                suhuData,
-                kelembapanData
-            );
-
-
-        hasilManual.style.display =
-            "block";
-
-
-        hasilManualJudul.innerHTML =
-            iconMusim(musim) +
-            " " +
-            musim;
-
-
-        hasilManualText.innerHTML =
-            buatRekomendasi(musim);
-
-
-        hasilManual.classList.remove(
-            "muncul"
-        );
-
-
-        setTimeout(function(){
-
-            hasilManual.classList.add(
-                "muncul"
-            );
-
-        },50);
-
-    }
+/* ================================
+   CAMERA
+================================ */
+
+camera=new THREE.PerspectiveCamera(
+    50,
+    window.innerWidth/window.innerHeight,
+    .1,
+    200
 );
 
 
-/* =====================================================
-   OTOMATIS MEMINTA LOKASI
-   ===================================================== */
+/* ================================
+   RENDERER
+================================ */
+
+renderer=new THREE.WebGLRenderer({
+    antialias:true
+});
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio,2)
+);
+
+renderer.shadowMap.enabled=true;
+
+renderer.shadowMap.type=
+    THREE.PCFSoftShadowMap;
+
+renderer.outputColorSpace=
+    THREE.SRGBColorSpace;
+
+document
+.getElementById("canvas-container")
+.appendChild(renderer.domElement);
+
+
+/* ================================
+   LIGHTING
+================================ */
+
+const ambient=
+new THREE.HemisphereLight(
+    0xb8d8c0,
+    0x162018,
+    1.4
+);
+
+scene.add(ambient);
+
+
+const sun=
+new THREE.DirectionalLight(
+    0xffffff,
+    2.4
+);
+
+sun.position.set(
+    -15,
+    25,
+    12
+);
+
+sun.castShadow=true;
+
+sun.shadow.mapSize.width=2048;
+sun.shadow.mapSize.height=2048;
+
+scene.add(sun);
+
+
+/* ================================
+   MATERIALS
+================================ */
+
+const bodyMat=
+new THREE.MeshStandardMaterial({
+    color:0x25352b,
+    metalness:.75,
+    roughness:.27
+});
+
+const darkMat=
+new THREE.MeshStandardMaterial({
+    color:0x111715,
+    metalness:.9,
+    roughness:.25
+});
+
+const rubberMat=
+new THREE.MeshStandardMaterial({
+    color:0x090b0a,
+    metalness:.1,
+    roughness:.95
+});
+
+const silverMat=
+new THREE.MeshStandardMaterial({
+    color:0x87918b,
+    metalness:.9,
+    roughness:.18
+});
+
+const glassMat=
+new THREE.MeshPhysicalMaterial({
+    color:0x182d31,
+    metalness:.25,
+    roughness:.08,
+    transmission:.1,
+    transparent:true,
+    opacity:.85
+});
+
+const solarMat=
+new THREE.MeshStandardMaterial({
+    color:0x0b2940,
+    metalness:.65,
+    roughness:.25
+});
+
+const redMat=
+new THREE.MeshStandardMaterial({
+    color:0x450808,
+    emissive:0xff1800,
+    emissiveIntensity:2
+});
+
+const greenMat=
+new THREE.MeshStandardMaterial({
+    color:0x063514,
+    emissive:0x00ff62,
+    emissiveIntensity:2
+});
+
+const orangeMat=
+new THREE.MeshStandardMaterial({
+    color:0x5a1800,
+    emissive:0xff5100,
+    emissiveIntensity:2
+});
+
+
+/* ================================
+   HELPERS
+================================ */
+
+function box(
+    w,h,d,
+    material,
+    x=0,
+    y=0,
+    z=0
+){
+
+    const geo=
+    new THREE.BoxGeometry(
+        w,h,d
+    );
+
+    const mesh=
+    new THREE.Mesh(
+        geo,
+        material
+    );
+
+    mesh.position.set(
+        x,y,z
+    );
+
+    mesh.castShadow=true;
+    mesh.receiveShadow=true;
+
+    corona.add(mesh);
+
+    return mesh;
+}
+
+
+function cylinder(
+    radiusTop,
+    radiusBottom,
+    height,
+    material,
+    x=0,
+    y=0,
+    z=0,
+    rotationX=0,
+    rotationZ=0
+){
+
+    const geo=
+    new THREE.CylinderGeometry(
+        radiusTop,
+        radiusBottom,
+        height,
+        32
+    );
+
+    const mesh=
+    new THREE.Mesh(
+        geo,
+        material
+    );
+
+    mesh.position.set(
+        x,y,z
+    );
+
+    mesh.rotation.x=
+        rotationX;
+
+    mesh.rotation.z=
+        rotationZ;
+
+    mesh.castShadow=true;
+
+    corona.add(mesh);
+
+    return mesh;
+}
+
+
+/* ================================
+   ROBOT GROUP
+================================ */
+
+corona=
+new THREE.Group();
+
+scene.add(corona);
+
+
+/* ================================
+   MAIN CHASSIS
+================================ */
+
+box(
+    4.8,
+    1.55,
+    3.2,
+    bodyMat,
+    0,
+    2.25,
+    0
+);
+
+box(
+    4.5,
+    .45,
+    2.9,
+    darkMat,
+    0,
+    3.2,
+    0
+);
+
+
+/* LOWER ARMOR */
+
+box(
+    5.1,
+    .65,
+    3.35,
+    darkMat,
+    0,
+    1.55,
+    0
+);
+
+
+/* FRONT ARMOR */
+
+box(
+    4.7,
+    1.4,
+    .25,
+    silverMat,
+    0,
+    2.25,
+    -1.7
+);
+
+
+/* FRONT DARK PANEL */
+
+box(
+    3.8,
+    .65,
+    .08,
+    darkMat,
+    0,
+    2.35,
+    -1.86
+);
+
+
+/* ================================
+   SENSOR STRIP
+================================ */
+
+for(let i=-2;i<=2;i++){
+
+    const sensor=
+    new THREE.Mesh(
+        new THREE.BoxGeometry(
+            .42,
+            .16,
+            .08
+        ),
+        i===0 ? orangeMat : greenMat
+    );
+
+    sensor.position.set(
+        i*.65,
+        2.85,
+        -1.9
+    );
+
+    corona.add(sensor);
+}
+
+
+/* ================================
+   SIDE ARMOR
+================================ */
+
+for(let side of [-1,1]){
+
+    box(
+        .25,
+        1.25,
+        2.4,
+        silverMat,
+        side*2.5,
+        2.1,
+        0
+    );
+
+}
+
+
+/* ================================
+   SOLAR PANEL PLATFORM
+================================ */
+
+box(
+    5.1,
+    .18,
+    3.3,
+    darkMat,
+    0,
+    3.5,
+    0
+);
+
+
+/* SOLAR PANEL */
+
+const panel=
+new THREE.Group();
+
+panel.position.y=3.65;
+
+corona.add(panel);
+
+
+const solar=
+new THREE.Mesh(
+    new THREE.BoxGeometry(
+        4.7,
+        .08,
+        2.9
+    ),
+    solarMat
+);
+
+solar.castShadow=true;
+
+panel.add(solar);
+
+
+/* SOLAR GRID */
+
+for(let x=-2;x<=2;x++){
+
+    const line=
+    new THREE.Mesh(
+        new THREE.BoxGeometry(
+            .025,
+            .02,
+            2.85
+        ),
+        silverMat
+    );
+
+    line.position.x=
+        x*.94;
+
+    line.position.y=.06;
+
+    panel.add(line);
+
+}
+
+
+for(let z=-1;z<=1;z++){
+
+    const line=
+    new THREE.Mesh(
+        new THREE.BoxGeometry(
+            4.65,
+            .02,
+            .025
+        ),
+        silverMat
+    );
+
+    line.position.z=
+        z*.95;
+
+    line.position.y=.06;
+
+    panel.add(line);
+
+}
+
+
+/* ================================
+   CENTRAL MAST
+================================ */
+
+cylinder(
+    .13,
+    .17,
+    1.8,
+    silverMat,
+    0,
+    4.55,
+    0
+);
+
+
+/* ================================
+   CAMERA HEAD
+================================ */
+
+cameraHead=
+new THREE.Group();
+
+cameraHead.position.set(
+    0,
+    5.45,
+    0
+);
+
+corona.add(cameraHead);
+
+
+const cameraBody=
+new THREE.Mesh(
+    new THREE.BoxGeometry(
+        1.2,
+        .65,
+        .9
+    ),
+    darkMat
+);
+
+cameraBody.castShadow=true;
+
+cameraHead.add(cameraBody);
+
+
+/* CAMERA LENS */
+
+const lens=
+new THREE.Mesh(
+    new THREE.CylinderGeometry(
+        .28,
+        .28,
+        .18,
+        32
+    ),
+    glassMat
+);
+
+lens.rotation.x=
+Math.PI/2;
+
+lens.position.z=
+-.52;
+
+cameraHead.add(lens);
+
+
+/* CAMERA RING */
+
+const ring=
+new THREE.Mesh(
+    new THREE.TorusGeometry(
+        .28,
+        .045,
+        16,
+        32
+    ),
+    silverMat
+);
+
+ring.rotation.x=
+Math.PI/2;
+
+ring.position.z=
+-.62;
+
+cameraHead.add(ring);
+
+
+/* ================================
+   THERMAL SENSOR
+================================ */
+
+const thermal=
+new THREE.Mesh(
+    new THREE.SphereGeometry(
+        .18,
+        20,
+        20
+    ),
+    orangeMat
+);
+
+thermal.position.set(
+    .48,
+    -.05,
+    -.52
+);
+
+cameraHead.add(thermal);
+
+
+/* ================================
+   WATER CANNON
+================================ */
+
+waterCannon=
+new THREE.Group();
+
+waterCannon.position.set(
+    0,
+    3.35,
+    -1.95
+);
+
+corona.add(waterCannon);
+
+
+/* BASE */
+
+const cannonBase=
+new THREE.Mesh(
+    new THREE.CylinderGeometry(
+        .48,
+        .6,
+        .25,
+        32
+    ),
+    darkMat
+);
+
+cannonBase.rotation.x=
+Math.PI/2;
+
+waterCannon.add(cannonBase);
+
+
+/* BARREL */
+
+const barrel=
+new THREE.Mesh(
+    new THREE.CylinderGeometry(
+        .22,
+        .32,
+        2,
+        32
+    ),
+    silverMat
+);
+
+barrel.rotation.x=
+Math.PI/2;
+
+barrel.position.z=
+-.85;
+
+barrel.position.y=
+.12;
+
+waterCannon.add(barrel);
+
+
+/* NOZZLE */
+
+const nozzle=
+new THREE.Mesh(
+    new THREE.CylinderGeometry(
+        .28,
+        .2,
+        .4,
+        32
+    ),
+    darkMat
+);
+
+nozzle.rotation.x=
+Math.PI/2;
+
+nozzle.position.z=
+-1.95;
+
+nozzle.position.y=
+.12;
+
+waterCannon.add(nozzle);
+
+
+/* ================================
+   ANTENNA
+================================ */
+
+cylinder(
+    .035,
+    .05,
+    1.3,
+    silverMat,
+    1.55,
+    4.45,
+    .5
+);
+
+const antennaTip=
+new THREE.Mesh(
+    new THREE.SphereGeometry(
+        .1,
+        16,
+        16
+    ),
+    greenMat
+);
+
+antennaTip.position.set(
+    1.55,
+    5.15,
+    .5
+);
+
+corona.add(antennaTip);
+
+
+/* ================================
+   WARNING LIGHTS
+================================ */
+
+const warningLights=[];
+
+for(let side of [-1,1]){
+
+    const light=
+    new THREE.Mesh(
+        new THREE.BoxGeometry(
+            .38,
+            .22,
+            .2
+        ),
+        redMat
+    );
+
+    light.position.set(
+        side*2.05,
+        3.1,
+        -.65
+    );
+
+    corona.add(light);
+
+    warningLights.push(light);
+}
+
+
+/* ================================
+   WHEELS
+================================ */
+
+function createWheel(
+    x,z
+){
+
+    const wheelGroup=
+    new THREE.Group();
+
+    wheelGroup.position.set(
+        x,
+        1.2,
+        z
+    );
+
+    corona.add(
+        wheelGroup
+    );
+
+    const tire=
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .78,
+            .78,
+            .48,
+            40
+        ),
+        rubberMat
+    );
+
+    tire.rotation.z=
+    Math.PI/2;
+
+    tire.castShadow=true;
+
+    wheelGroup.add(tire);
+
+
+    const rim=
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .42,
+            .42,
+            .5,
+            32
+        ),
+        silverMat
+    );
+
+    rim.rotation.z=
+    Math.PI/2;
+
+    wheelGroup.add(rim);
+
+
+    const hub=
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .17,
+            .17,
+            .55,
+            24
+        ),
+        darkMat
+    );
+
+    hub.rotation.z=
+    Math.PI/2;
+
+    wheelGroup.add(hub);
+
+
+    for(let i=0;i<6;i++){
+
+        const spoke=
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                .08,
+                .32,
+                .08
+            ),
+            darkMat
+        );
+
+        spoke.rotation.z=
+        i*Math.PI/3;
+
+        spoke.position.x=
+        .16*Math.cos(
+            i*Math.PI/3
+        );
+
+        spoke.position.y=
+        .16*Math.sin(
+            i*Math.PI/3
+        );
+
+        wheelGroup.add(
+            spoke
+        );
+
+    }
+
+    wheels.push(
+        wheelGroup
+    );
+}
+
+
+createWheel(-2.55,-1.15);
+createWheel( 2.55,-1.15);
+createWheel(-2.55, 1.15);
+createWheel( 2.55, 1.15);
+
+
+/* ================================
+   GROUND
+================================ */
+
+const ground=
+new THREE.Mesh(
+    new THREE.PlaneGeometry(
+        100,
+        100
+    ),
+    new THREE.MeshStandardMaterial({
+        color:0x26351f,
+        roughness:1
+    })
+);
+
+ground.rotation.x=
+-Math.PI/2;
+
+ground.receiveShadow=true;
+
+scene.add(ground);
+
+
+/* ================================
+   FIELD LINES
+================================ */
+
+const grid=
+new THREE.GridHelper(
+    100,
+    50,
+    0x4b6548,
+    0x31412f
+);
+
+grid.position.y=.01;
+
+scene.add(grid);
+
+
+/* ================================
+   FARM CROPS
+================================ */
+
+const cropMat=
+new THREE.MeshStandardMaterial({
+    color:0x2d6b2d
+});
+
+
+for(let i=0;i<100;i++){
+
+    const plant=
+    new THREE.Group();
+
+    const x=
+    (Math.random()-.5)*80;
+
+    const z=
+    (Math.random()-.5)*80;
+
+    if(
+        Math.abs(x)<8 &&
+        Math.abs(z)<8
+    ) continue;
+
+    for(let j=0;j<3;j++){
+
+        const leaf=
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                .06,
+                .5,
+                .12
+            ),
+            cropMat
+        );
+
+        leaf.position.y=
+        .25;
+
+        leaf.rotation.z=
+        (Math.random()-.5)*.6;
+
+        leaf.position.x=
+        (Math.random()-.5)*.18;
+
+        plant.add(leaf);
+
+    }
+
+    plant.position.set(
+        x,
+        0,
+        z
+    );
+
+    scene.add(plant);
+}
+
+
+/* ================================
+   FIRE
+================================ */
+
+const fireGroup=
+new THREE.Group();
+
+fireGroup.position.set(
+    8,
+    0,
+    -5
+);
+
+scene.add(fireGroup);
+
+
+/* FIRE BASE */
+
+const fireLight=
+new THREE.PointLight(
+    0xff3b00,
+    7,
+    15
+);
+
+fireLight.position.y=
+2;
+
+fireGroup.add(
+    fireLight
+);
+
+
+for(let i=0;i<35;i++){
+
+    const particle=
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .15+
+            Math.random()*.2,
+            10,
+            10
+        ),
+        new THREE.MeshBasicMaterial({
+            color:
+            i%2===0
+            ?0xff3b00
+            :0xffb000,
+            transparent:true,
+            opacity:.8
+        })
+    );
+
+    particle.position.set(
+        (Math.random()-.5)*1.5,
+        Math.random()*3.5+.2,
+        (Math.random()-.5)*1.5
+    );
+
+    particle.userData={
+        speed:
+        .01+
+        Math.random()*.03,
+        baseY:
+        particle.position.y
+    };
+
+    fireGroup.add(
+        particle
+    );
+
+    fireParticles.push(
+        particle
+    );
+}
+
+
+/* ================================
+   SMOKE
+================================ */
+
+for(let i=0;i<18;i++){
+
+    const smoke=
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .35+
+            Math.random()*.5,
+            16,
+            16
+        ),
+        new THREE.MeshStandardMaterial({
+            color:0x303030,
+            transparent:true,
+            opacity:.25
+        })
+    );
+
+    smoke.position.set(
+        (Math.random()-.5)*2,
+        3+
+        Math.random()*4,
+        (Math.random()-.5)*2
+    );
+
+    smoke.userData={
+        speed:
+        .003+
+        Math.random()*.008
+    };
+
+    fireGroup.add(
+        smoke
+    );
+
+    smokeParticles.push(
+        smoke
+    );
+}
+
+
+/* ================================
+   MOVEMENT
+================================ */
+
+document.addEventListener(
+"keydown",
+e=>{
+    keys[e.key.toLowerCase()]=true;
+});
+
+
+document.addEventListener(
+"keyup",
+e=>{
+    keys[e.key.toLowerCase()]=false;
+});
+
+
+/* ================================
+   MOUSE
+================================ */
+
+renderer.domElement.addEventListener(
+"mousedown",
+e=>{
+    mouseDown=true;
+    lastX=e.clientX;
+    lastY=e.clientY;
+});
+
 
 window.addEventListener(
-    "load",
-    function(){
+"mouseup",
+()=>{
+    mouseDown=false;
+});
 
-        setTimeout(
-            function(){
 
-                mintaLokasi();
+window.addEventListener(
+"mousemove",
+e=>{
 
-            },
-            1000
+    if(!mouseDown)return;
+
+    const dx=
+    e.clientX-lastX;
+
+    const dy=
+    e.clientY-lastY;
+
+    orbitX-=dx*.005;
+
+    orbitY-=dy*.005;
+
+    orbitY=
+    Math.max(
+        -.1,
+        Math.min(
+            1.2,
+            orbitY
+        )
+    );
+
+    lastX=e.clientX;
+    lastY=e.clientY;
+
+});
+
+
+/* ================================
+   TOUCH
+================================ */
+
+renderer.domElement.addEventListener(
+"touchstart",
+e=>{
+
+    if(e.touches.length!==1)return;
+
+    mouseDown=true;
+
+    lastX=
+    e.touches[0].clientX;
+
+    lastY=
+    e.touches[0].clientY;
+
+});
+
+
+renderer.domElement.addEventListener(
+"touchend",
+()=>{
+    mouseDown=false;
+});
+
+
+renderer.domElement.addEventListener(
+"touchmove",
+e=>{
+
+    if(!mouseDown)return;
+
+    const touch=
+    e.touches[0];
+
+    const dx=
+    touch.clientX-lastX;
+
+    const dy=
+    touch.clientY-lastY;
+
+    orbitX-=dx*.005;
+    orbitY-=dy*.005;
+
+    orbitY=
+    Math.max(
+        -.1,
+        Math.min(
+            1.2,
+            orbitY
+        )
+    );
+
+    lastX=
+    touch.clientX;
+
+    lastY=
+    touch.clientY;
+
+});
+
+
+/* ================================
+   ZOOM
+================================ */
+
+renderer.domElement.addEventListener(
+"wheel",
+e=>{
+
+    distance+=
+    e.deltaY*.01;
+
+    distance=
+    Math.max(
+        7,
+        Math.min(
+            30,
+            distance
+        )
+    );
+
+});
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+document
+.getElementById("autoBtn")
+.addEventListener(
+"click",
+()=>{
+
+    autoRotate=
+    !autoRotate;
+
+    document
+    .getElementById("autoBtn")
+    .textContent=
+    autoRotate
+    ? "🔄 Auto Rotate"
+    : "▶ Manual";
+
+});
+
+
+document
+.getElementById("resetBtn")
+.addEventListener(
+"click",
+()=>{
+
+    corona.position.set(
+        0,
+        0,
+        0
+    );
+
+    corona.rotation.set(
+        0,
+        0,
+        0
+    );
+
+    orbitX=0;
+    orbitY=.35;
+    distance=16;
+
+});
+
+
+/* ================================
+   ANIMATION
+================================ */
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    const delta=
+    clock.getDelta();
+
+
+    /* AUTO ROTATE */
+
+    if(autoRotate){
+
+        orbitX+=
+        delta*.18;
+
+    }
+
+
+    /* ROBOT MOVEMENT */
+
+    const moveSpeed=
+    4*delta;
+
+    const rotateSpeed=
+    2.2*delta;
+
+
+    if(keys["w"]){
+
+        corona.translateZ(
+            -moveSpeed
+        );
+
+        wheels.forEach(
+            w=>{
+                w.rotation.x+=
+                .18;
+            }
         );
 
     }
+
+
+    if(keys["s"]){
+
+        corona.translateZ(
+            moveSpeed
+        );
+
+        wheels.forEach(
+            w=>{
+                w.rotation.x-=
+                .18;
+            }
+        );
+
+    }
+
+
+    if(keys["a"]){
+
+        corona.rotation.y+=
+        rotateSpeed;
+
+    }
+
+
+    if(keys["d"]){
+
+        corona.rotation.y-=
+        rotateSpeed;
+
+    }
+
+
+    if(keys["q"]){
+
+        corona.position.y+=
+        moveSpeed;
+
+    }
+
+
+    if(keys["e"]){
+
+        corona.position.y-=
+        moveSpeed;
+
+        corona.position.y=
+        Math.max(
+            0,
+            corona.position.y
+        );
+
+    }
+
+
+    /* CAMERA HEAD SCAN */
+
+    cameraHead.rotation.y=
+    Math.sin(
+        performance.now()*.001
+    )*.35;
+
+
+    /* WATER CANNON */
+
+    waterCannon.rotation.y=
+    Math.sin(
+        performance.now()*.0008
+    )*.25;
+
+
+    /* WARNING LIGHTS */
+
+    const pulse=
+    Math.sin(
+        performance.now()*.01
+    );
+
+    warningLights.forEach(
+        light=>{
+            light.material
+            .emissiveIntensity=
+            pulse>0
+            ?4
+            :0.7;
+        }
+    );
+
+
+    /* FIRE */
+
+    fireParticles.forEach(
+        p=>{
+
+            p.position.y+=
+            p.userData.speed;
+
+            p.scale.multiplyScalar(
+                .99
+            );
+
+            if(
+                p.position.y>4
+            ){
+
+                p.position.y=
+                .2+
+                Math.random()*1.2;
+
+                p.scale.setScalar(1);
+
+            }
+
+        }
+    );
+
+
+    /* SMOKE */
+
+    smokeParticles.forEach(
+        p=>{
+
+            p.position.y+=
+            p.userData.speed;
+
+            p.position.x+=
+            Math.sin(
+                performance.now()*.001+
+                p.position.y
+            )*.002;
+
+            if(
+                p.position.y>8
+            ){
+
+                p.position.y=3;
+
+            }
+
+        }
+    );
+
+
+    /* INFO */
+
+    const speed=
+    keys["w"]||keys["s"]
+    ?12
+    :0;
+
+    document
+    .getElementById("speed")
+    .textContent=
+    speed+
+    " km/h";
+
+
+    const temperature=
+    42+
+    Math.round(
+        Math.random()*8
+    );
+
+    document
+    .getElementById("temperature")
+    .textContent=
+    temperature+
+    "°C";
+
+
+    /* CAMERA */
+
+    const target=
+    new THREE.Vector3(
+        corona.position.x,
+        corona.position.y+2,
+        corona.position.z
+    );
+
+
+    camera.position.x=
+    target.x+
+    Math.sin(orbitX)*
+    Math.cos(orbitY)*
+    distance;
+
+    camera.position.z=
+    target.z+
+    Math.cos(orbitX)*
+    Math.cos(orbitY)*
+    distance;
+
+    camera.position.y=
+    target.y+
+    Math.sin(orbitY)*
+    distance;
+
+
+    camera.lookAt(
+        target
+    );
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+/* ================================
+   RESIZE
+================================ */
+
+window.addEventListener(
+"resize",
+()=>{
+
+    camera.aspect=
+    window.innerWidth/
+    window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+});
+
+
+/* ================================
+   START
+================================ */
+
+setTimeout(
+()=>{
+
+    document
+    .getElementById("loading")
+    .style.display=
+    "none";
+
+},
+800
 );
 
 
-/* =====================================================
-   CONSOLE
-   ===================================================== */
-
-console.log(
-    "🌱 AGRI-SIAGA aktif."
-);
-
-console.log(
-    "📍 Sistem GPS siap digunakan."
-);
+animate();
 
 </script>
 
 </body>
 </html>
-```
